@@ -8,8 +8,13 @@ class CMD extends SlashCommand {
         
         // this.guilds = ["1211544398219976724"];
         
-        this.setName("ping");
-        this.setDescription("Check if the bot is online");
+        this.setName("create");
+        this.setDescription("Create a vps");
+
+        this.addStringOption(option =>
+            option.setName('name')
+                .setDescription('VPS name')
+				.setRequired(true));
 
         this.requiresAdmin = false;
     }
