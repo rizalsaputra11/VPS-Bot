@@ -21,7 +21,17 @@ const BullMQ = require('bullmq');
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    
+
+    const queue = new BullMQ.Queue('de-f1_create', {
+        connection: {
+            host: process.env.REDIS_HOST,
+            username: process.env.REDIS_USERNAME,
+            password: process.env.REDIS_PASSWORD,
+            port: process.env.REDIS_PORT
+        }
+    });
+
+    client.queue = queue;
     
 });
 

@@ -22,7 +22,14 @@ class CMD extends SlashCommand {
     async execute(interaction) {
         if (await checkAdmin(this, interaction)) return;
 
-        interaction.reply('**Pong** :coin: :D')
+        // console.log(interaction.client);
+        var queue = interaction.client.queue;
+
+        var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {});
+
+        console.log(job);
+
+        interaction.reply('VPS placed in queue. ID: ' + job.id)
     }
 
 }
