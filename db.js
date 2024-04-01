@@ -35,8 +35,22 @@ const VPS = mongoose.model('VPS', {
     state: String, // queued / created
     node: String
 });
+const Node = mongoose.model('Node', {
+    location: String, // first 2 letters
+    type: String, // free or paid,
+    number: Number,
+
+    code: String,
+
+    vpsCount: Number,
+    vpsLimit: Number,
+
+    isFull: Boolean,
+    isAvailable: Boolean
+});
 
 module.exports = {
     User,
-    VPS
+    VPS,
+    Node
 };
