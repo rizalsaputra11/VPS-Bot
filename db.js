@@ -37,7 +37,9 @@ const VPS = mongoose.model('VPS', {
     node: String,
 
     sshPort: Number,
-    portLimit: Number
+    portLimit: Number,
+
+    nodeIP: String
 });
 const Node = mongoose.model('Node', {
     location: String, // first 2 letters
