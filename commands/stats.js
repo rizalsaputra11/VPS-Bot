@@ -31,7 +31,7 @@ class CMD extends SlashCommand {
             } else {
                 status += ':green_circle:';
             }
-            if (node.isAvailable && node.isAvailable == false) {
+            if (node.isAvailable == false) {
                 status +=  `:orange_circle:`
             }
             res += `\n${status} \`${node.code}\` **${node.vpsCount}/${node.vpsLimit}** - ${Math.round((node.vpsCount/node.vpsLimit)*100)}%`;
