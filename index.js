@@ -112,8 +112,10 @@ function registerEvents(name, queueOptions, q) {
                 console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
             }
         } else {
+            try {
             var userID = data.userID;
             client.users.send(userID, `> **Create failed :x:!**\n> \t\tHello. Your vps has failed to create :(`);
+            } catch(e) {}
         }
     });
 
@@ -122,8 +124,17 @@ function registerEvents(name, queueOptions, q) {
         console.log('> ' + (await q.getJob(jobId)).progress);
     });
     
-    events.on('failed', ({ jobId, failedReason }) => {
+    events.on('failed', async ({ jobId, failedReason }) => {
         console.log(`[${name}] ${jobId} has failed with reason ${failedReason}`);
+
+        var job = await q.getJob(jobId);
+        var data = job.data;
+
+        try {
+            client.users.send(userID, `> VPS Failed to create :(`);
+        } catch(e) {
+            console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
+        }
     });
 
 }
