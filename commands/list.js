@@ -25,9 +25,9 @@ class CMD extends SlashCommand {
             userID: interaction.user.id
         });
 
-        var res = `**YOUR VPS (${VPS.length}/${user.vpsLimit})**:\n`;
+        var res = `**YOUR VPS (${VPS.length}/${user.vpsLimit})**:\n\n`;
         
-        if (VPS.length == 0) res += `\n> \tYou currently don't have any VPS. If you need one, create one with /create.`;
+        if (VPS.length == 0) res += `> \tYou currently don't have any VPS. If you need one, create one with /create.`;
 
         for (let i = 0; i < VPS.length; i++) {
             var vps = VPS[i];
@@ -35,6 +35,7 @@ class CMD extends SlashCommand {
             res += `**VPS ${vps.name}** (\`${vps.node}-${vps.proxID}\`):\n`;
             res += `ID: ${vps.node}-${vps.proxID}\n`;
             res += `Expiry: ${time( new Date(vps.expiry), 'R')}\n`;
+            res += `State: ${vps.state}\n`;
 
             res += '\n\n';
         }
