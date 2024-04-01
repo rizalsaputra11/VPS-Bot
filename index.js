@@ -11,7 +11,8 @@ const slashCtrl = new SlashCtrl({
     applicationId: applicationId
 });
 
-slashCtrl.publishCommandsFromFolder(path.join(__dirname, 'commands'));
+var e = slashCtrl.publishCommandsFromFolder(path.join(__dirname, 'commands'));
+console.log(e);
 
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
