@@ -49,9 +49,15 @@ const Node = mongoose.model('Node', {
     isFull: Boolean,
     isAvailable: Boolean
 });
+const Port = mongoose.model('Port', {
+    node: String,
+    port: Number,
+    isUsed: Boolean
+});
 
 module.exports = {
     User,
     VPS,
-    Node
+    Node,
+    Port
 };

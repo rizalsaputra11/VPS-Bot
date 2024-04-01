@@ -20,20 +20,34 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 const BullMQ = require('bullmq');
 
-client.on('ready', () => {
+client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
 
-    const queue = new BullMQ.Queue('de-f1_create', {
+    var queueOptions = {
         connection: {
             host: process.env.REDIS_HOST,
             username: process.env.REDIS_USERNAME,
             password: process.env.REDIS_PASSWORD,
             port: process.env.REDIS_PORT
         }
-    });
+    };
 
-    client.queue = queue;
+    // const queue = new BullMQ.Queue('de-f1_create', );
 
+    client.createQueue = {};
+    client.opsQueue = {};
+
+    var db = require('./db');
+    var nodes = await db.Node.find();
+
+    for(let i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        var code = node.code;
+        client.createQueue[code] = new BullMQ.Queue(`${code}_create`, queueOptions);
+        client.opsQueue[code] =  new BullMQ.Queue(`${code}_ops`, queueOptions);
+
+        console.log(`> Created <Client>.createQueue[${code}] and .opsQueue[${code}]`);
+    }
     
     calculateNodeSize();
 

@@ -57,7 +57,7 @@ class CMD extends SlashCommand {
         });
         var ip = randomip('10.5.0.0', 16);
 
-        var sshPort = await db.Ports.findOne({
+        var sshPort = await db.Port.findOne({
             node: node.code,
             isUsed: false
         });
@@ -68,6 +68,18 @@ class CMD extends SlashCommand {
             password,
             ip,
             sshPort: sshPort.port
+        });
+
+        var VPS = new db.VPS({
+            userID: interaction.user.id,
+            password,
+            ip,
+            sshPort: sshPort.port,
+            sshPortID: sshPort._id,
+            state: 'queued',
+            jobID: job.id,
+            isCreated: false,
+            cost: (1/730/60)
         });
 
         // console.log(job);
