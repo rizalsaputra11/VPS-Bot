@@ -1,4 +1,4 @@
-// const db = require('./db');
+const db = require('./db');
 
 async function checkAdmin(command, interaction) {
     if (command.requiresAdmin == false) return false;
@@ -13,10 +13,29 @@ async function checkAdmin(command, interaction) {
     await interaction.reply(`> **This command is admin only!**`);
     return true;
 }
-async function checkDBUser(interaction) {
+async function getUser(interaction) {
     var userID = interaction.user.id;
+
+    var user = await db.User.findOne({
+        userID: userID
+    });
+    
+    if (!user) {
+        user = new db.User({
+            userID,
+            balance: 0,
+            vpsLimit: 1,
+            plan: 'free',
+            isBanned: false,
+            banReason: ''
+        });
+        await user.save();
+
+    }
+
+    return user;
 }
 module.exports = {
     checkAdmin,
-    checkDBUser
+    getUser
 };

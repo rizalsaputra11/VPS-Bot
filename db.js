@@ -6,6 +6,8 @@ const User = mongoose.model('User', {
     balance: Number,
     
     vpsLimit: Number,
+    isBanned: Boolean,
+    banReason: String,
     
     plan: String // free
 });
