@@ -8,16 +8,16 @@ class CMD extends SlashCommand {
         
         // this.guilds = ["1211544398219976724"];
         
-        this.setName("ping");
-        this.setDescription("Check if the bot is online");
+        this.setName("list");
+        this.setDescription("List your vps");
 
-        this.requiresAdmin = true;
+        this.requiresAdmin = false;
     }
     
     async execute(interaction) {
         if (await checkAdmin(this, interaction)) return;
 
-        interaction.reply('**Pong** :coin: :D')
+        interaction.reply('**YOUR VPS**')
     }
 
 }
