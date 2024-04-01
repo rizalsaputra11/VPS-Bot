@@ -9,7 +9,8 @@ const User = mongoose.model('User', {
     isBanned: Boolean,
     banReason: String,
     
-    plan: String // free
+    plan: String, // free
+    portLimit: Number
 });
 
 const VPS = mongoose.model('VPS', {
@@ -33,7 +34,10 @@ const VPS = mongoose.model('VPS', {
     cost: Number,
     lastCost: Number,
     state: String, // queued / created
-    node: String
+    node: String,
+
+    sshPort: Number,
+    portLimit: Number
 });
 const Node = mongoose.model('Node', {
     location: String, // first 2 letters

@@ -61,6 +61,7 @@ class CMD extends SlashCommand {
             node: node.code,
             isUsed: false
         });
+        if (!sshPort) return await lib.error(interaction, 'No ports available. Please contact an administrator.');
         sshPort.isUsed = true;
         await sshPort.save();
 
@@ -79,7 +80,8 @@ class CMD extends SlashCommand {
             state: 'queued',
             jobID: job.id,
             isCreated: false,
-            cost: (1/730/60)
+            cost: (1/730/60),
+            portLimit: user.portLimit
         });
 
         // console.log(job);
