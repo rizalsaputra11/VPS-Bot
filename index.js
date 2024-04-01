@@ -74,6 +74,8 @@ async function calculateNodeSize() {
 
         if (vpsOnNode.length >= no.vpsLimit) {
             no.isFull = true;
+        } else {
+            no.isFull = false;
         }
 
         await no.save();
