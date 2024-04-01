@@ -43,6 +43,7 @@ const Node = mongoose.model('Node', {
     code: String,
 
     vpsCount: Number,
+    percent: Number,
     vpsLimit: Number,
 
     isFull: Boolean,

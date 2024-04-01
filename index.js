@@ -72,6 +72,8 @@ async function calculateNodeSize() {
         var no = await db.Node.findOne({ code: node.code });
         no.vpsCount = vpsOnNode.length;
 
+        no.percent = (no.vpsCount/no.vpsLimit)*100;
+
         if (vpsOnNode.length >= no.vpsLimit) {
             no.isFull = true;
         } else {

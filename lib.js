@@ -35,7 +35,11 @@ async function getUser(interaction) {
 
     return user;
 }
+async function error(interaction, message) {
+    await interaction.reply(`> \n> **:x: ERROR:**\n> \`${message}\``);
+}
 module.exports = {
     checkAdmin,
-    getUser
+    getUser,
+    error
 };
