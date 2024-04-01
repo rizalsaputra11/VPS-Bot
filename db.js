@@ -51,7 +51,9 @@ const Node = mongoose.model('Node', {
     vpsLimit: Number,
 
     isFull: Boolean,
-    isAvailable: Boolean
+    isAvailable: Boolean,
+
+    ip: String
 });
 const Port = mongoose.model('Port', {
     node: String,
