@@ -27,7 +27,8 @@ async function getUser(interaction) {
             vpsLimit: 1,
             plan: 'free',
             isBanned: false,
-            banReason: ''
+            banReason: '',
+            portLimit: 10
         });
         await user.save();
 
