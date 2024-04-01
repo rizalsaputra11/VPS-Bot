@@ -104,7 +104,7 @@ function registerEvents(name, queueOptions, q) {
                 var conn = '';
 
                 conn += '```bash';
-                conn += `ssh root@${VPS.nodeIP} -p ${vps.sshPort}`
+                conn += `ssh root@${VPS.nodeIP} -p ${VPS.sshPort}`
                 conn += '```';
 
                 client.users.send(userID, `> **VPS Created!**\n> \t\tHello. Your vps has been created!\n> This message will contain the details of your vps.\n\n> VPS ID: \`${returnvalue.node}-${returnvalue.proxID}\`\n> SSH Port: ${VPS.sshPort}\n> Username: root\n> Password: ||\`${VPS.password}\`||\n\n> Connect to your vps by executing this in a terminal:\n${conn}`);
