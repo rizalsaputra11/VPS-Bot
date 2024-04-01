@@ -27,12 +27,12 @@ class CMD extends SlashCommand {
 
             var status = '';
             if (node.isFull) {
-                status += `:red_circle:`;
+                status = `:red_circle:`;
             } else {
-                status += ':green_circle:';
+                status = ':green_circle:';
             }
             if (node.isAvailable == false) {
-                status +=  `:orange_circle:`
+                status =  `:orange_circle:`
             }
             res += `\n${status} \`${node.code}\` **${node.vpsCount}/${node.vpsLimit}** - ${Math.round((node.vpsCount/node.vpsLimit)*100)}%`;
         }
