@@ -48,7 +48,7 @@ class CMD extends SlashCommand {
         // console.log(interaction.client);
         var queue = interaction.client.createQueue[node.code];
 
-        if (!queue) return await lib.error(interaction, 'Node not found?');
+        if (!queue) return await lib.error(interaction, 'Node not found?', true);
 
         var password = generator.generate({
             length: 15,
@@ -61,7 +61,7 @@ class CMD extends SlashCommand {
             node: node.code,
             isUsed: false
         });
-        if (!sshPort) return await lib.error(interaction, 'No ports available. Please contact an administrator.');
+        if (!sshPort) return await lib.error(interaction, 'No ports available. Please contact an administrator.', true);
         sshPort.isUsed = true;
         await sshPort.save();
 

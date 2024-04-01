@@ -36,7 +36,10 @@ async function getUser(interaction) {
 
     return user;
 }
-async function error(interaction, message) {
+async function error(interaction, message, edit) {
+    if (edit == true) {
+        return await interaction.editReply(`> \n> **:x: ERROR:**\n> \`${message}\``);
+    }
     await interaction.reply(`> \n> **:x: ERROR:**\n> \`${message}\``);
 }
 module.exports = {
