@@ -3,12 +3,12 @@ require('dotenv').config();
 const { SlashCtrl } = require('slashctrl');
 const path = require('path');
 
-var botToken = '';
-var applicationId = '';
+var botToken = process.env.DISCORD_TOKEN;
+var applicationId = process.env.DISCORD_ID;
 
 const slashCtrl = new SlashCtrl({
     token: botToken,
-    applicationId: ''
+    applicationId: applicationId
 });
 
 slashCtrl.publishCommandsFromFolder(path.join(__dirname, 'commands'));
