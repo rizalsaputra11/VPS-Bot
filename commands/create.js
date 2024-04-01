@@ -67,12 +67,6 @@ class CMD extends SlashCommand {
 
         await interaction.editReply('Adding to queue...');
 
-        var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
-            password,
-            ip,
-            sshPort: sshPort.port
-        });
-
         var VPS = new db.VPS({
             userID: interaction.user.id,
             password,
@@ -83,16 +77,27 @@ class CMD extends SlashCommand {
             jobID: job.id,
             isCreated: false,
             cost: (1/730/60),
-            portLimit: user.portLimit
+            portLimit: user.portLimit,
+            node: node.code,
+            nodeIP: node.ip
         });
         await VPS.save();
+
+        var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
+            password,
+            ip,
+            sshPort: sshPort.port,
+            userID: interaction.user.id,
+            nodeIP: node.ip,
+            vpsID: VPS._id,
+            node: node.code
+        });
 
         sshPort.vpsID = VPS._id;
         await sshPort.save();
 
-        console.log(job);
-
-        interaction.editReply(`**QUEUED**\nYour vps has been placed in the queue with ID ${job.id} and ${VPS._id} on node \`${node.code}\``)
+        interaction.editReply(`**QUEUED**\nYour vps has been placed in the queue with ID ${job.id} and ${VPS._id} on node \`${node.code}\``);
+        console.log('after 5');
     }
 
 }
