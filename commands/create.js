@@ -74,7 +74,6 @@ class CMD extends SlashCommand {
             sshPort: sshPort.port,
             sshPortID: sshPort._id,
             state: 'queued',
-            jobID: job.id,
             isCreated: false,
             cost: (1/730/60),
             portLimit: user.portLimit,
@@ -92,6 +91,8 @@ class CMD extends SlashCommand {
             vpsID: VPS._id,
             node: node.code
         });
+        vps.jobID = job.id;
+        await VPS.save();
 
         sshPort.vpsID = VPS._id;
         await sshPort.save();
