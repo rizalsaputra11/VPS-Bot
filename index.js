@@ -131,7 +131,7 @@ function registerEvents(name, queueOptions, q) {
         var data = job.data;
 
         try {
-            client.users.send(userID, `> VPS Failed to create :(`);
+            client.users.send(data.userID, `> VPS Failed to create :(`);
         } catch(e) {
             console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
         }
