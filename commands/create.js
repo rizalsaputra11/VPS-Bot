@@ -28,6 +28,8 @@ class CMD extends SlashCommand {
 
         var user = await lib.getUser(interaction);
         
+        var name = interaction.options.getString('name');
+
         const db = require('../db');
         var VPS = await db.VPS.find({
             userID: interaction.user.id
@@ -70,6 +72,7 @@ class CMD extends SlashCommand {
         var VPS = new db.VPS({
             userID: interaction.user.id,
             password,
+            name,
             ip,
             sshPort: sshPort.port,
             sshPortID: sshPort._id,

@@ -33,7 +33,7 @@ class CMD extends SlashCommand {
             var vps = VPS[i];
 
             res += `**VPS ${vps.name}** (\`${vps.node}-${vps.proxID}\`):\n`;
-            res += `ID: ${vps.node}-${vps.proxID}\n`;
+            res += `ID: \`${vps._ID}\`\n`;
             res += `Expiry: ${time( new Date(vps.expiry), 'R')}\n`;
             res += `State: ${vps.state}\n`;
 
