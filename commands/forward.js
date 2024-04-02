@@ -56,6 +56,7 @@ class CMD extends SlashCommand {
         sshPort.isUsed = true;
         sshPort.intPort = port;
         sshPort.vpsID = VPS._id;
+        await sshPort.save();
 
         await interaction.deferReply();
 
