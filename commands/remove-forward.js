@@ -41,17 +41,17 @@ class CMD extends SlashCommand {
         });
         if (!VPS) return await lib.error(interaction, 'VPS not found');
 
-        var Port = await db.Port.find({
+        var Port = await db.Port.findOne({
             vpsID: VPS._id,
             intPort: port
         });
 
         if (!Port) return await lib.error(interaction, 'Port not found');
 
-        sshPort.isUsed = false;
-        sshPort.intPort = null;
-        sshPort.vpsID = null;
-        await sshPort.save();
+        Port.isUsed = false;
+        Port.intPort = null;
+        Port.vpsID = null;
+        await Port.save();
 
         await interaction.deferReply();
 
@@ -62,16 +62,16 @@ class CMD extends SlashCommand {
         await interaction.editReply('Adding to queue...');
         
         var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
-            action: 'rforward',
+            action: 'remforward',
             proxID: VPS.proxID,
             ip: VPS.ip,
-            port: sshPort.port,
+            port: Port.port,
             intPort: port,
             userID: interaction.user.id,
-            portID: sshPort._id
+            portID: Port._id
         });
 
-        interaction.editReply(`**QUEUED**\nYour request to remove the forwarded port has been placed in the queue with iD ${job.id} and will get processed shortly. External port: ${sshPort.port}`);
+        interaction.editReply(`**QUEUED**\nYour request to remove the forwarded port has been placed in the queue with iD ${job.id} and will get processed shortly. External port: ${Port.port}`);
     }
 
 }
