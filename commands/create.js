@@ -65,6 +65,7 @@ class CMD extends SlashCommand {
         });
         if (!sshPort) return await lib.error(interaction, 'No ports available. Please contact an administrator.', true);
         sshPort.isUsed = true;
+        sshPort.intPort = 22;
         await sshPort.save();
 
         await interaction.editReply('Adding to queue...');

@@ -54,9 +54,27 @@ class CMD extends SlashCommand {
             isUsed: false
         });
         sshPort.isUsed = true;
+        sshPort.intPort = port;
         sshPort.vpsID = VPS._id;
+
+        await interaction.deferReply();
+
+        var queue = interaction.client.opsQueue[VPS.node];
+
+        if (!queue) return await lib.error(interaction, 'Node not found?', true);
+
+        await interaction.editReply('Adding to queue...');
         
-        interaction.reply(`${id} and ${port}`)
+        var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
+            action: 'forward',
+            proxID: VPS.proxID,
+            ip: VPS.ip,
+            port: sshPort.port,
+            intPort: port,
+            userID: interaction.user.id
+        });
+
+        interaction.editReply(`**QUEUED**\nYour port forward request of port ${port} has been placed in the queue (${job.id}) and will be processed shortly. External port: ${sshPort.port}`);
     }
 
 }
