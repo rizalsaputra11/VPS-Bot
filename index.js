@@ -117,6 +117,7 @@ function registerEvents(name, queueOptions, q) {
         } else {
             try {
             var userID = data.userID;
+            console.log('r', returnvalue)
             client.users.send(userID, `> **Create failed :x:!**\n> \t\tHello. Your vps has failed to create :(`);
             } catch(e) {}
         }
