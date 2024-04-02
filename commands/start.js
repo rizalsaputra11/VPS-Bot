@@ -32,7 +32,7 @@ class CMD extends SlashCommand {
 
         const db = require('../db');
 
-        var VPS = new db.VPS.find({
+        var VPS = db.VPS.find({
             _id: ID,
             userID: interaction.user.id
         });
