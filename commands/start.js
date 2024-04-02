@@ -12,8 +12,8 @@ class CMD extends SlashCommand {
         
         // this.guilds = ["1211544398219976724"];
         
-        this.setName("create");
-        this.setDescription("Create a vps");
+        this.setName("start");
+        this.setDescription("Start your vps");
 
         this.addStringOption(option =>
             option.setName('id')
