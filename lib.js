@@ -13,9 +13,9 @@ async function checkAdmin(command, interaction) {
     await interaction.reply(`> **This command is admin only!**`);
     return true;
 }
-async function getUser(interaction) {
+async function getUser(interaction, isMessage) {
     var userID;
-    if (interaction.author) {
+    if (isMessage) {
         userID = interaction.author.id;
     } else {
         userID = interaction.user.id;

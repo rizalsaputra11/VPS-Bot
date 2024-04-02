@@ -241,7 +241,7 @@ async function calculateNodeSize() {
 
 client.on('messageCreate', async (msg) => {
     var lib = require('./lib');
-    var user = await lib.getUser(msg);
+    var user = await lib.getUser(msg, true);
 
     user.balance = user.balance + 1;
     await user.save();
