@@ -59,7 +59,7 @@ class CMD extends SlashCommand {
             uppercase: false,
             numbers: true
         });
-        var ip = randomip('10.5.0.0', 16);
+        var ip = randomip(node.subnet, node.subnetMask);
 
         var sshPort = await db.Port.findOne({
             node: node.code,
