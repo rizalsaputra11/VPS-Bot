@@ -54,6 +54,7 @@ class CMD extends SlashCommand {
             node: VPS.node,
             isUsed: false
         });
+        if (!sshPort) return await lib.error(interaction, 'Sorry, no ports are available. Please contact an administrator.');
         sshPort.isUsed = true;
         sshPort.intPort = port;
         sshPort.vpsID = VPS._id;
