@@ -82,7 +82,7 @@ class CMD extends SlashCommand {
         });
         await VPS.save();
 
-        console.log('1');
+        console.log('0');
 
         var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
             password,
@@ -94,6 +94,7 @@ class CMD extends SlashCommand {
             node: node.code,
             portID: sshPort._id
         });
+        console.log('1');
         VPS.jobID = job.id;
         await VPS.save();
 
