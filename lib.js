@@ -14,7 +14,13 @@ async function checkAdmin(command, interaction) {
     return true;
 }
 async function getUser(interaction) {
-    var userID = interaction.user.id;
+    var userID;
+    if (interaction.author) {
+        userID = interaction.author.id;
+    } else {
+        userID = interaction.user.id;
+    }
+    // var userID = interaction.user.id;
 
     var user = await db.User.findOne({
         userID: userID

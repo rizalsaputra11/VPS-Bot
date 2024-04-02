@@ -19,7 +19,7 @@ var e = slashCtrl.publishCommandsFromFolder(path.join(__dirname, 'commands'));
 console.log(e);
 
 const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
 const BullMQ = require('bullmq');
 
@@ -238,3 +238,14 @@ async function calculateNodeSize() {
     
     log('> Checked nodes!');
 }
+
+client.on('messageCreate', async (msg) => {
+    console.log(msg);
+    var userID = msg.author.id;
+    
+    var lib = require('./lib');
+    var user = await lib.getUser(msg);
+
+    user.balance = user.balance + 1;
+    await user.save();
+})

@@ -1,10 +1,6 @@
 const { SlashCommand } = require('slashctrl');
 const lib = require('../lib');
 
-
-var randomip = require('random-ip');
-var generator = require('generate-password');
-
 class CMD extends SlashCommand {
 
     constructor() {
