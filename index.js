@@ -56,8 +56,8 @@ client.on('ready', async () => {
         client.createQueue[code] = new BullMQ.Queue(`${code}_create`, queueOptions);
         client.opsQueue[code] =  new BullMQ.Queue(`${code}_ops`, queueOptions);
 
-        registerEvents(`${code}_create`, queueOptions, client.createQueue[code]);
-        registerEvents(`${code}_ops`, queueOptions, client.opsQueue[code]);
+        createEvents(`${code}_create`, queueOptions, client.createQueue[code]);
+        opsEvents(`${code}_ops`, queueOptions, client.opsQueue[code]);
 
         console.log(`> Created <Client>.createQueue[${code}] and .opsQueue[${code}]`);
     }
@@ -75,7 +75,7 @@ client.on('interactionCreate', async interaction => {
 
 client.login(botToken);
 
-function registerEvents(name, queueOptions, q) {
+function createEvents(name, queueOptions, q) {
     const events = new BullMQ.QueueEvents(name, queueOptions);
 
     events.on('waiting', ({ jobId }) => {
@@ -120,6 +120,58 @@ function registerEvents(name, queueOptions, q) {
             console.log('r', returnvalue)
             client.users.send(userID, `> **Create failed :x:!**\n> \t\tHello. Your vps has failed to create :(`);
             } catch(e) {}
+        }
+    });
+
+    events.on('progress', async ({ jobId, returnvalue, mau }) => {
+        console.log(`[${name}] ${jobId} has progress and returned ${returnvalue}`, returnvalue, mau);
+        console.log('> ' + (await q.getJob(jobId)).progress);
+    });
+    
+    events.on('failed', async ({ jobId, failedReason }) => {
+        console.log(`[${name}] ${jobId} has failed with reason ${failedReason}`);
+
+        var job = await q.getJob(jobId);
+        var data = job.data;
+
+        try {
+            client.users.send(data.userID, `> VPS Failed to create :(`);
+        } catch(e) {
+            console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
+        }
+    });
+
+}
+
+function messageUser(userID, message) {
+    try {
+        client.users.send(userID, message);
+    } catch(e) {
+        console.log('failed to dm user', e)
+    }
+}
+
+function opsEvents(name, queueOptions, q) {
+    const events = new BullMQ.QueueEvents(name, queueOptions);
+
+    events.on('waiting', ({ jobId }) => {
+        console.log(`[${name}] A job with ID ${jobId} is waiting`);
+    });
+    
+    events.on('active', ({ jobId, prev }) => {
+        console.log(`[${name}] Job ${jobId} is now active; previous status was ${prev}`);
+    });
+    
+    events.on('completed', async ({ jobId, returnvalue }) => {
+        console.log(`[${name}] ${jobId} has completed and returned ${returnvalue}`, returnvalue);
+
+        var job = await q.getJob(jobId);
+        var data = job.data;
+
+        if (returnvalue.ok == true) {
+            messageUser(data.userID, `Action ${returnvalue.action} for VPS ${returnvalue.proxID} completed!`);
+        } else {
+            messageUser(data.userID, `Action ${returnvalue.action} failed...`);
         }
     });
 
