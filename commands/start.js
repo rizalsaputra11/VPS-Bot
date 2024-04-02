@@ -39,7 +39,7 @@ class CMD extends SlashCommand {
 
         if (!VPS) return await lib.error(interaction, 'VPS not found');
 
-        if (VPS.state != 'created') return await lib.error(interaction, 'VPS is not created');
+        if (VPS.state != 'created') return await lib.error(interaction, 'VPS is not created ' + VPS.state);
         
         await interaction.deferReply();
 
