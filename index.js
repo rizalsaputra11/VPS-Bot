@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const { SlashCtrl } = require('slashctrl');
 const path = require('path');
+const dayjs = require('dayjs');
 const { log } = console;
 
 // var channel;
@@ -102,6 +103,8 @@ function createEvents(name, queueOptions, q) {
                 });
                 if (!VPS) return console.log('VPS NOT FOUND?!!?!?111');
                 VPS.proxID = returnvalue.proxID;
+                VPS.state = 'created';
+                VPS.expiry = dayjs().add(3, 'day');
                 await VPS.save();
 
                 var conn = '';
@@ -111,6 +114,7 @@ function createEvents(name, queueOptions, q) {
                 conn += '\n```';
 
                 client.users.send(userID, `> **VPS Created!**\n> \t\tHello. Your vps has been created!\n> This message will contain the details of your vps.\n\n> VPS ID: \`${returnvalue.node}-${returnvalue.proxID}\`\n> VPS IP (NAT/shared): ${VPS.nodeIP}\n> SSH Port: ${VPS.sshPort}\n> Username: root\n> Password: ||\`${VPS.password}\`||\n\n> Connect to your vps by executing this in a terminal:\n${conn}`);
+
             } catch(e) {
                 console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
             }

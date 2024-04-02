@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bullmq": "^5.5.0",
+    "dayjs": "^1.11.10",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "generate-password": "^1.7.1",
