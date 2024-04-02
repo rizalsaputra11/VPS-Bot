@@ -43,6 +43,8 @@ class CMD extends SlashCommand {
             isAvailable: true
         }).sort({ percent: 1 }).exec();
 
+        if (!node) return await lib.error(interaction, 'No node available.');
+
         console.log(node);
 
         await interaction.deferReply();
