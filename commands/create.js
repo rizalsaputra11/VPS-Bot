@@ -82,7 +82,8 @@ class CMD extends SlashCommand {
             cost: (1/730/60),
             portLimit: user.portLimit,
             node: node.code,
-            nodeIP: node.ip
+            nodeIP: node.ip,
+            shortID: Math.floor(100000 + Math.random() * 900000)
         });
         await VPS.save();
 
