@@ -46,7 +46,7 @@ class CMD extends SlashCommand {
         await interaction.deferReply();
 
         // console.log(interaction.client);
-        var queue = interaction.client.opsQueue[node.code];
+        var queue = interaction.client.opsQueue[VPS.node];
 
         if (!queue) return await lib.error(interaction, 'Node not found?', true);
 
@@ -54,7 +54,8 @@ class CMD extends SlashCommand {
 
         var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
             action: 'start',
-            proxID: VPS.proxID
+            proxID: VPS.proxID,
+            userID: interaction.user.id
         });
 
         interaction.editReply(`**QUEUED**\nThe action has been added to the queue as ID ${job.id} and will process shortly.`);
