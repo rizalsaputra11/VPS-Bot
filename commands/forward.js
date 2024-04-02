@@ -46,8 +46,6 @@ class CMD extends SlashCommand {
         });
         portCount = portCount.length;
 
-        console.log(portCount);
-
         if (portCount >= user.portLimit) return await lib.error(interaction, `You have reached the port limit of ${user.portLimit} and you currently have ${portCount} ports.`);
 
         var sshPort = await db.Port.findOne({
