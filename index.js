@@ -240,9 +240,6 @@ async function calculateNodeSize() {
 }
 
 client.on('messageCreate', async (msg) => {
-    console.log(msg);
-    var userID = msg.author.id;
-    
     var lib = require('./lib');
     var user = await lib.getUser(msg);
 
