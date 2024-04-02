@@ -71,7 +71,8 @@ class CMD extends SlashCommand {
             ip: VPS.ip,
             port: sshPort.port,
             intPort: port,
-            userID: interaction.user.id
+            userID: interaction.user.id,
+            portID: port._id
         });
 
         interaction.editReply(`**QUEUED**\nYour port forward request of port ${port} has been placed in the queue (${job.id}) and will be processed shortly. External port: ${sshPort.port}`);
