@@ -110,7 +110,7 @@ class CMD extends SlashCommand {
 
         console.log('3');
 
-        interaction.editReply(`**QUEUED**\nYour vps has been placed in the queue with ID ${job.id} and ${VPS._id} on node \`${node.code}\``);
+        interaction.editReply(`**QUEUED**\nYour vps has been placed in the queue with queue ID ${job.id} and VPS ID ${VPS.shortID} on node \`${node.code}\``);
         console.log('after 5');
     }
 

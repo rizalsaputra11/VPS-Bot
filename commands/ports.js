@@ -12,7 +12,7 @@ class CMD extends SlashCommand {
         this.setName("ports");
         this.setDescription("Get your forwarded ports");
 
-        this.addStringOption(option =>
+        this.addIntegerOption(option =>
             option.setName('id')
                 .setDescription('VPS ID')
 				.setRequired(true));
@@ -27,10 +27,11 @@ class CMD extends SlashCommand {
 
         var user = await lib.getUser(interaction);
 
-        var id = interaction.options.getString('id');
+        var id = interaction.options.getInteger('id');
 
         var VPS = await db.VPS.findOne({
-            _id: id
+            shortID: id,
+            userID: interaction.user.id
         });
         if (!VPS) return await lib.error(interaction, 'VPS not found');
 

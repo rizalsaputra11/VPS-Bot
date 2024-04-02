@@ -11,7 +11,7 @@ class CMD extends SlashCommand {
         this.setName("stop");
         this.setDescription("Stop your vps");
 
-        this.addStringOption(option =>
+        this.addIntegerOption(option =>
             option.setName('id')
                 .setDescription('VPS ID')
 				.setRequired(true));
@@ -24,12 +24,12 @@ class CMD extends SlashCommand {
 
         var user = await lib.getUser(interaction);
 
-        var ID = interaction.options.getString('id');
+        var ID = interaction.options.getInteger('id');
 
         const db = require('../db');
 
         var VPS = await db.VPS.findOne({
-            _id: ID,
+            shortID: ID,
             userID: interaction.user.id
         });
 
