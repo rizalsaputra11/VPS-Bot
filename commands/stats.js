@@ -37,6 +37,8 @@ class CMD extends SlashCommand {
             res += `\n${status} \`${node.code}\` **${node.vpsCount}/${node.vpsLimit}** - ${Math.round((node.vpsCount/node.vpsLimit)*100)}%`;
         }
 
+        res += `\n\n:green_circle: - Slots available\n:orange_circle: - Under maintenance\n:red_circle: - Full (no slots available)`;
+
         interaction.reply(res);
     }
 
