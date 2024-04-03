@@ -113,7 +113,7 @@ function createEvents(name, queueOptions, q) {
                 conn += `ssh root@${VPS.nodeIP} -p ${VPS.sshPort}`
                 conn += '\n```';
 
-                client.users.send(userID, `> **VPS Created!**\n> \t\tHello. Your vps has been created!\n> This message will contain the details of your vps.\n\n> VPS ID: \`${returnvalue.node}-${returnvalue.proxID}\`\n> VPS ID: \`${VPS._id}\`\n> VPS IP (NAT/shared): ${VPS.nodeIP}\n> SSH Port: ${VPS.sshPort}\n> Username: root\n> Password: ||\`${VPS.password}\`||\n\n> Connect to your vps by executing this in a terminal:\n${conn}`);
+                client.users.send(userID, `> **VPS Created!**\n> \t\tHello. Your vps has been created!\n> This message will contain the details of your vps.\n\n> VPS ID: \`${VPS.shortID}\`\n> VPS IP (NAT/shared): ${VPS.nodeIP}\n> SSH Port: ${VPS.sshPort}\n> Username: root\n> Password: ||\`${VPS.password}\`||\n\n> Connect to your vps by executing this in a terminal:\n${conn}\n\nIf you want to forward a port, use the /forward command.`);
 
             } catch(e) {
                 console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
