@@ -56,7 +56,9 @@ const Node = mongoose.model('Node', {
     isFull: Boolean,
     isAvailable: Boolean,
 
-    ip: String
+    ip: String,
+    subnet: String,
+    subnetMask: Number
 });
 const Port = mongoose.model('Port', {
     node: String,
