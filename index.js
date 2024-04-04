@@ -147,7 +147,7 @@ function createEvents(name, queueOptions, q, code) {
         }
     });
 
-    c
+    
 }
 
 function messageUser(userID, message) {
