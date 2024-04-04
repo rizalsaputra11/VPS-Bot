@@ -94,6 +94,7 @@ class CMD extends SlashCommand {
         var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
             password,
             ip,
+            subnetMask: node.subnetMask,
             sshPort: sshPort.port,
             userID: interaction.user.id,
             nodeIP: node.ip,
