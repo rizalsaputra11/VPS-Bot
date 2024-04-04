@@ -57,8 +57,8 @@ client.on('ready', async () => {
         client.createQueue[code] = new BullMQ.Queue(`${code}_create`, queueOptions);
         client.opsQueue[code] =  new BullMQ.Queue(`${code}_ops`, queueOptions);
 
-        createEvents(`${code}_create`, queueOptions, client.createQueue[code]);
-        opsEvents(`${code}_ops`, queueOptions, client.opsQueue[code]);
+        createEvents(`${code}_create`, queueOptions, client.createQueue[code], code);
+        opsEvents(`${code}_ops`, queueOptions, client.opsQueue[code], code);
 
         console.log(`> Created <Client>.createQueue[${code}] and .opsQueue[${code}]`);
     }
@@ -76,8 +76,10 @@ client.on('interactionCreate', async interaction => {
 
 client.login(botToken);
 
-function createEvents(name, queueOptions, q) {
+function createEvents(name, queueOptions, q, code) {
     const events = new BullMQ.QueueEvents(name, queueOptions);
+
+    client.createQueue[code].events = events;
 
     events.on('waiting', ({ jobId }) => {
         console.log(`[${name}] A job with ID ${jobId} is waiting`);
@@ -145,6 +147,7 @@ function createEvents(name, queueOptions, q) {
         }
     });
 
+    c
 }
 
 function messageUser(userID, message) {
@@ -155,8 +158,10 @@ function messageUser(userID, message) {
     }
 }
 
-function opsEvents(name, queueOptions, q) {
+function opsEvents(name, queueOptions, q, code) {
     const events = new BullMQ.QueueEvents(name, queueOptions);
+
+    client.opsQueue[code].events = events;
 
     events.on('waiting', ({ jobId }) => {
         console.log(`[${name}] A job with ID ${jobId} is waiting`);

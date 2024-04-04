@@ -76,6 +76,8 @@ class CMD extends SlashCommand {
             portID: sshPort._id
         });
 
+        await job.waitUntilFinished(queue.events);
+
         interaction.editReply(`**QUEUED**\nYour port forward request of port ${port} has been placed in the queue (${job.id}) and will be processed shortly. External port: ${sshPort.port}`);
     }
 

@@ -64,7 +64,7 @@ class CMD extends SlashCommand {
             });
 
             var s = Date.now()/1000;
-            await job.waitUntilFinished();
+            await job.waitUntilFinished(queue.events);
             var e = Date.now()/1000;
 
             interaction.editReply('A port was removed. Took ' + (e-s) + 's');
