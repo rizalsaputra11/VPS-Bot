@@ -91,6 +91,9 @@ class CMD extends SlashCommand {
 
         console.log(`${VPS.shortID} has ${ip}`);
 
+        sshPort.vpsID = VPS._id;
+        await sshPort.save();
+
         var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
             password,
             ip: VPS.ip,
@@ -106,9 +109,6 @@ class CMD extends SlashCommand {
         });
         VPS.jobID = job.id;
         await VPS.save();
-
-        sshPort.vpsID = VPS._id;
-        await sshPort.save();
 
         interaction.editReply(`**QUEUED**\nYour vps has been placed in the queue with queue ID ${job.id} and VPS ID ${VPS.shortID} on node \`${node.code}\``);
         console.log('after 5');
