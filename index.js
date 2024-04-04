@@ -82,11 +82,11 @@ function createEvents(name, queueOptions, q, code) {
     client.createQueue[code].events = events;
 
     events.on('waiting', ({ jobId }) => {
-        console.log(`[${name}] A job with ID ${jobId} is waiting`);
+        // console.log(`[${name}] A job with ID ${jobId} is waiting`);
     });
     
     events.on('active', ({ jobId, prev }) => {
-        console.log(`[${name}] Job ${jobId} is now active; previous status was ${prev}`);
+        // console.log(`[${name}] Job ${jobId} is now active; previous status was ${prev}`);
     });
     
     events.on('completed', async ({ jobId, returnvalue }) => {
@@ -130,7 +130,7 @@ function createEvents(name, queueOptions, q, code) {
     });
 
     events.on('progress', async ({ jobId, returnvalue, mau }) => {
-        console.log(`[${name}] ${jobId} has progress and returned ${returnvalue}`, returnvalue, mau);
+        // console.log(`[${name}] ${jobId} has progress and returned ${returnvalue}`, returnvalue, mau);
         console.log('> ' + (await q.getJob(jobId)).progress);
     });
     
@@ -164,11 +164,11 @@ function opsEvents(name, queueOptions, q, code) {
     client.opsQueue[code].events = events;
 
     events.on('waiting', ({ jobId }) => {
-        console.log(`[${name}] A job with ID ${jobId} is waiting`);
+        // console.log(`[${name}] A job with ID ${jobId} is waiting`);
     });
     
     events.on('active', ({ jobId, prev }) => {
-        console.log(`[${name}] Job ${jobId} is now active; previous status was ${prev}`);
+        // console.log(`[${name}] Job ${jobId} is now active; previous status was ${prev}`);
     });
     
     events.on('completed', async ({ jobId, returnvalue }) => {
@@ -185,7 +185,7 @@ function opsEvents(name, queueOptions, q, code) {
     });
 
     events.on('progress', async ({ jobId, returnvalue, mau }) => {
-        console.log(`[${name}] ${jobId} has progress and returned ${returnvalue}`, returnvalue, mau);
+        // console.log(`[${name}] ${jobId} has progress and returned ${returnvalue}`, returnvalue, mau);
         console.log('> ' + (await q.getJob(jobId)).progress);
     });
     

@@ -45,7 +45,7 @@ class CMD extends SlashCommand {
 
         if (!node) return await lib.error(interaction, 'No node available.');
 
-        console.log(node);
+        // console.log(node);
 
         await interaction.deferReply();
 
@@ -89,9 +89,11 @@ class CMD extends SlashCommand {
         });
         await VPS.save();
 
+        console.log(`${shortID} has ${ip}`);
+
         var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
             password,
-            ip,
+            ip: VPS.ip,
             subnetMask: node.subnetMask,
             sshPort: sshPort.port,
             userID: interaction.user.id,
