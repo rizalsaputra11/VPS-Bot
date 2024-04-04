@@ -36,6 +36,7 @@ class CMD extends SlashCommand {
             res += `ID: \`${vps.shortID}\`\n`;
             res += `Expiry: ${time( new Date(vps.expiry), 'R')}\n`;
             res += `State: ${vps.state}\n`;
+            res += `Node: ${vps.node}\n`;
             res += `Ports: Available using \`/ports\`\n`;
 
             res += '\n\n';
