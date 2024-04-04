@@ -58,7 +58,8 @@ const Node = mongoose.model('Node', {
 
     ip: String,
     subnet: String,
-    subnetMask: Number
+    subnetMask: Number,
+    storage: String
 });
 const Port = mongoose.model('Port', {
     node: String,
