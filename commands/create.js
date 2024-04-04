@@ -100,7 +100,8 @@ class CMD extends SlashCommand {
             vpsID: VPS._id,
             node: node.code,
             portID: sshPort._id,
-            shortID: Math.floor(100000 + Math.random() * 900000)
+            shortID: Math.floor(100000 + Math.random() * 900000),
+            storage: node.storage
         });
         console.log('1');
         VPS.jobID = job.id;
