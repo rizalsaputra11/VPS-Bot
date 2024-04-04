@@ -63,6 +63,12 @@ class CMD extends SlashCommand {
                 portID: port._id
             });
 
+            var s = Date.now()/1000;
+            await job.waitUntilFinished();
+            var e = Date.now()/1000;
+
+            interaction.editReply('A port was removed. Took ' + (e-s) + 's');
+
             port.isUsed = false;
             port.vpsID = null;
             port.intPort = null;
