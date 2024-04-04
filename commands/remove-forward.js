@@ -71,7 +71,11 @@ class CMD extends SlashCommand {
             portID: Port._id
         });
 
-        await job.waitUntilFinished(queue.events);
+        try {
+            await job.waitUntilFinished(queue.events);
+        } catch(e) {
+            interaction.editReply(String(e));
+        }
 
         interaction.editReply(`**QUEUED**\nYour request to remove the forwarded port has been placed in the queue with iD ${job.id} and will get processed shortly. External port: ${Port.port}`);
     }
