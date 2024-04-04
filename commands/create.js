@@ -89,7 +89,7 @@ class CMD extends SlashCommand {
         });
         await VPS.save();
 
-        console.log(`${shortID} has ${ip}`);
+        console.log(`${VPS.shortID} has ${ip}`);
 
         var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
             password,
