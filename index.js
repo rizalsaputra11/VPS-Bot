@@ -84,7 +84,8 @@ client.on('ready', async () => {
 
 async function updateStatus() {
     const db = require('./db');
-    var vpsCount = await db.VPS.find().length;
+    var vpsCount = await db.VPS.find();
+    vpsCount = vpsCount.length;
     client.user.setActivity(`with ${vpsCount} vps`);
 }
 
