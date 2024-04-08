@@ -40,7 +40,9 @@ const VPS = mongoose.model('VPS', {
     portLimit: Number,
 
     nodeIP: String,
-    shortID: Number
+    shortID: Number,
+
+    type: String // normal or test
 });
 const Node = mongoose.model('Node', {
     location: String, // first 2 letters

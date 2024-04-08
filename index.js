@@ -5,6 +5,9 @@ const path = require('path');
 const dayjs = require('dayjs');
 const { log } = console;
 
+var relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
+
 // var channel;
 
 var botToken = process.env.DISCORD_TOKEN;
@@ -265,4 +268,11 @@ async function checkExpiry() {
     });
 
     log(`> Found ${VPS.length} expired vps!`);
+
+
+    for (let i = 0; i < VPS.length; i++) {
+        var vps = VPS[i];
+
+        log(`${vps.shortID} - ${dayjs().to(dayjs(vps.expiry))}`);
+    }
 }
