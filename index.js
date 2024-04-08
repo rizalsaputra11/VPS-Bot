@@ -348,6 +348,10 @@ async function checkExpiry() {
             userID: interaction.user.id,
         });
 
+        const { time } = require('discord.js');
+
+        await channel.send(`<@${vps.userID}> your vps \`${vps.name}\` (${vps.type}/${vps.shortID}) expired: ${time( new Date(vps.expiry), 'R')}`);
+
         await db.VPS.deleteOne({
             _id: VPS._id
         });
