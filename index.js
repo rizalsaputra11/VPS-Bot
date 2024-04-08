@@ -355,7 +355,7 @@ async function checkExpiry() {
         await channel.send(`<@${vps.userID}> your vps \`${vps.name}\` (${vps.type}/${vps.shortID}) expired: ${time( new Date(vps.expiry), 'R')}`);
 
         await db.VPS.deleteOne({
-            _id: VPS._id
+            _id: vps._id
         });
 
         log(`VPS delete added to queue: ${job.id}`)
