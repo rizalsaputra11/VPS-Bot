@@ -338,9 +338,11 @@ async function checkExpiry() {
 
             // jobs.push(String(job.id))
 
+            log(`> Job: ${job.id}`);
+
         }
 
-        log(`Added port forwards to queue. Deleting vps... Job IDs: ${jobs.join(', ')}`)
+        log(`Added port forwards to queue. Deleting vps...`)
 
         var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
             action: 'delete',
