@@ -281,7 +281,7 @@ async function checkExpiry() {
 
     log(`> Found ${VPS.length} expired vps!`);
 
-    const channel = client.channels.cache.get('1204045694164533269');
+    const channel = client.channels.cache.get('1225176563113263124');
 
 
     for (let i = 0; i < VPS.length; i++) {
