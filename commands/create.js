@@ -115,7 +115,8 @@ class CMD extends SlashCommand {
             node: node.code,
             portID: sshPort._id,
             shortID: VPS.stortID,
-            storage: node.storage
+            storage: node.storage,
+            type
         });
         VPS.jobID = job.id;
         await VPS.save();
