@@ -66,6 +66,9 @@ client.on('ready', async () => {
     calculateNodeSize();
 
     setInterval(calculateNodeSize, 30*1000);
+
+    checkExpiry();
+    setInterval(checkExpiry, 30 * 1000);
 });
 
 client.on('interactionCreate', async interaction => {
@@ -251,3 +254,15 @@ client.on('messageCreate', async (msg) => {
     user.balance = user.balance + 1;
     await user.save();
 })
+
+async function checkExpiry() {
+    log('> Checking expiry')
+    const db = require('./db');
+    var VPS = await db.VPS.find({
+        expiry: {
+            $lt: Date.now()
+        }
+    });
+
+    log(`> Found ${VPS.length} expired vps!`);
+}
