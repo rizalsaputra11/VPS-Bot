@@ -76,7 +76,17 @@ client.on('ready', async () => {
 
     checkExpiry();
     setInterval(checkExpiry, 30 * 1000);
+
+   
+    updateStatus();
+    setInterval(updateStatus, 5 * 60 * 1000)
 });
+
+async function updateStatus() {
+    const db = require('./db');
+    var vpsCount = await db.VPS.find().length;
+    client.user.setActivity(`with ${vpsCount} vps`);
+}
 
 client.on('interactionCreate', async interaction => {
     console.log(`> ${interaction.user.username} -> /${interaction.commandName}`);
