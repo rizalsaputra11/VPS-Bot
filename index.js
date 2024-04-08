@@ -311,13 +311,13 @@ async function checkExpiry() {
         for(let i = 0; i < vpsPorts.length; i++) {
             var port = vpsPorts[i];
 
-            var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
+            var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
                 action: 'remforward',
-                proxID: VPS.proxID,
-                ip: VPS.ip,
+                proxID: vps.proxID,
+                ip: vps.ip,
                 port: port.port,
                 intPort: port.intPort,
-                userID: interaction.user.id,
+                userID: vps.userID,
                 portID: port._id
             });
 
@@ -342,10 +342,10 @@ async function checkExpiry() {
 
         log(`Added port forwards to queue. Deleting vps... Job IDs: ${jobs.join(', ')}`)
 
-        var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
+        var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
             action: 'delete',
-            proxID: VPS.proxID,
-            userID: interaction.user.id,
+            proxID: vps.proxID,
+            userID: vps.userID,
         });
 
         const { time } = require('discord.js');
