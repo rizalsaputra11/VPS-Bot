@@ -10,6 +10,9 @@ dayjs.extend(relativeTime)
 
 // var channel;
 
+var isChecking;
+    isChecking = false;
+
 var botToken = process.env.DISCORD_TOKEN;
 var applicationId = process.env.DISCORD_ID;
 
@@ -69,6 +72,7 @@ client.on('ready', async () => {
     calculateNodeSize();
 
     setInterval(calculateNodeSize, 30*1000);
+
 
     checkExpiry();
     setInterval(checkExpiry, 30 * 1000);
@@ -259,6 +263,10 @@ client.on('messageCreate', async (msg) => {
 })
 
 async function checkExpiry() {
+    if (isChecking == true) return log('is checking');
+
+    isChecking = true;
+
     log('> Checking expiry')
     const db = require('./db');
     var VPS = await db.VPS.find({
@@ -269,10 +277,81 @@ async function checkExpiry() {
 
     log(`> Found ${VPS.length} expired vps!`);
 
+    const channel = client.channels.cache.get('1204045694164533269');
+
 
     for (let i = 0; i < VPS.length; i++) {
         var vps = VPS[i];
 
         log(`${vps.shortID} - ${dayjs().to(dayjs(vps.expiry))}`);
+
+        if (!vps.proxID) {
+            var vpsPorts = await db.Port.deleteMany({
+                vpsID: vps._id
+            });
+
+            await db.VPS.deleteOne({
+                _id: vps._id
+            });
+
+            log(`${vps.shortID} did not have a proxmox ID`);
+        } else {
+
+        var queue = client.opsQueue[vps.node];
+        if (!queue) return log(`> Queue ${vps.node} not found`);
+
+        var vpsPorts = await db.Port.find({
+            vpsID: vps._id
+        });
+
+        for(let i = 0; i < vpsPorts.length; i++) {
+            var port = vpsPorts[i];
+
+            var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
+                action: 'remforward',
+                proxID: VPS.proxID,
+                ip: VPS.ip,
+                port: port.port,
+                intPort: port.intPort,
+                userID: interaction.user.id,
+                portID: port._id
+            });
+
+            var s = Date.now()/1000;
+            try {
+                await job.waitUntilFinished(queue.events);
+            } catch(e) {
+                log(String(e));
+            }
+            var e = Date.now()/1000;
+
+            log('A port was removed. Took ' + (e-s) + 's');
+
+            port.isUsed = false;
+            port.vpsID = null;
+            port.intPort = null;
+            await port.save();
+
+            // jobs.push(String(job.id))
+
+        }
+
+        log(`Added port forwards to queue. Deleting vps... Job IDs: ${jobs.join(', ')}`)
+
+        var job = await queue.add(`vps_${interaction.user.id}-${Date.now()}`, {
+            action: 'delete',
+            proxID: VPS.proxID,
+            userID: interaction.user.id,
+        });
+
+        await db.VPS.deleteOne({
+            _id: VPS._id
+        });
+
+        log(`VPS delete added to queue: ${job.id}`)
     }
+
+}
+
+    isChecking = false;
 }
