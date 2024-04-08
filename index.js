@@ -11,7 +11,7 @@ dayjs.extend(relativeTime)
 // var channel;
 
 var isChecking;
-    isChecking = false;
+isChecking = false;
 
 var botToken = process.env.DISCORD_TOKEN;
 var applicationId = process.env.DISCORD_ID;
@@ -54,30 +54,30 @@ client.on('ready', async () => {
     var db = require('./db');
     var nodes = await db.Node.find();
 
-    for(let i = 0; i < nodes.length; i++) {
+    for (let i = 0; i < nodes.length; i++) {
         var node = nodes[i];
         var code = node.code;
 
         // console.log(queueOptions)
 
         client.createQueue[code] = new BullMQ.Queue(`${code}_create`, queueOptions);
-        client.opsQueue[code] =  new BullMQ.Queue(`${code}_ops`, queueOptions);
+        client.opsQueue[code] = new BullMQ.Queue(`${code}_ops`, queueOptions);
 
         createEvents(`${code}_create`, queueOptions, client.createQueue[code], code);
         opsEvents(`${code}_ops`, queueOptions, client.opsQueue[code], code);
 
         console.log(`> Created <Client>.createQueue[${code}] and .opsQueue[${code}]`);
     }
-    
+
     calculateNodeSize();
 
-    setInterval(calculateNodeSize, 30*1000);
+    setInterval(calculateNodeSize, 30 * 1000);
 
 
     checkExpiry();
     setInterval(checkExpiry, 30 * 1000);
 
-   
+
     updateStatus();
     setInterval(updateStatus, 5 * 60 * 1000)
 });
@@ -105,11 +105,11 @@ function createEvents(name, queueOptions, q, code) {
     events.on('waiting', ({ jobId }) => {
         // console.log(`[${name}] A job with ID ${jobId} is waiting`);
     });
-    
+
     events.on('active', ({ jobId, prev }) => {
         // console.log(`[${name}] Job ${jobId} is now active; previous status was ${prev}`);
     });
-    
+
     events.on('completed', async ({ jobId, returnvalue }) => {
         console.log(`[${name}] ${jobId} has completed and returned ${returnvalue}`, returnvalue);
 
@@ -142,15 +142,15 @@ function createEvents(name, queueOptions, q, code) {
 
                 client.users.send(userID, `> **VPS Created!**\n> \t\tHello. Your vps has been created!\n> This message will contain the details of your vps.\n\n> VPS ID: \`${VPS.shortID}\`\n> VPS IP (NAT/shared): ${VPS.nodeIP}\n> SSH Port: ${VPS.sshPort}\n> Username: root\n> Password: ||\`${VPS.password}\`||\n\n> Connect to your vps by executing this in a terminal:\n${conn}\n\nIf you want to forward a port, use the /forward command.`);
 
-            } catch(e) {
+            } catch (e) {
                 console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
             }
         } else {
             try {
-            var userID = data.userID;
-            console.log('r', returnvalue)
-            client.users.send(userID, `> **Create failed :x:!**\n> \t\tHello. Your vps has failed to create :(`);
-            } catch(e) {}
+                var userID = data.userID;
+                console.log('r', returnvalue)
+                client.users.send(userID, `> **Create failed :x:!**\n> \t\tHello. Your vps has failed to create :(`);
+            } catch (e) { }
         }
     });
 
@@ -158,7 +158,7 @@ function createEvents(name, queueOptions, q, code) {
         // console.log(`[${name}] ${jobId} has progress and returned ${returnvalue}`, returnvalue, mau);
         console.log('> ' + (await q.getJob(jobId)).progress);
     });
-    
+
     events.on('failed', async ({ jobId, failedReason }) => {
         console.log(`[${name}] ${jobId} has failed with reason ${failedReason}`);
 
@@ -167,18 +167,18 @@ function createEvents(name, queueOptions, q, code) {
 
         try {
             client.users.send(data.userID, `> VPS Failed to create :(`);
-        } catch(e) {
+        } catch (e) {
             console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
         }
     });
 
-    
+
 }
 
 function messageUser(userID, message) {
     try {
         client.users.send(userID, message);
-    } catch(e) {
+    } catch (e) {
         console.log('failed to dm user', e)
     }
 }
@@ -191,11 +191,11 @@ function opsEvents(name, queueOptions, q, code) {
     events.on('waiting', ({ jobId }) => {
         // console.log(`[${name}] A job with ID ${jobId} is waiting`);
     });
-    
+
     events.on('active', ({ jobId, prev }) => {
         // console.log(`[${name}] Job ${jobId} is now active; previous status was ${prev}`);
     });
-    
+
     events.on('completed', async ({ jobId, returnvalue }) => {
         console.log(`[${name}] ${jobId} has completed and returned ${returnvalue}`, returnvalue);
 
@@ -213,7 +213,7 @@ function opsEvents(name, queueOptions, q, code) {
         // console.log(`[${name}] ${jobId} has progress and returned ${returnvalue}`, returnvalue, mau);
         console.log('> ' + (await q.getJob(jobId)).progress);
     });
-    
+
     events.on('failed', async ({ jobId, failedReason }) => {
         console.log(`[${name}] ${jobId} has failed with reason ${failedReason}`);
 
@@ -222,7 +222,7 @@ function opsEvents(name, queueOptions, q, code) {
 
         try {
             client.users.send(data.userID, `> Action has failed`);
-        } catch(e) {
+        } catch (e) {
             console.log(`> Failed to send ${data.userID} a DM: ${String(e)}`);
         }
     });
@@ -239,7 +239,7 @@ async function calculateNodeSize() {
     var nodes = await db.Node.find();
     log(`Found ${nodes.length} nodes`);
 
-    for(let i = 0; i < nodes.length; i++) {
+    for (let i = 0; i < nodes.length; i++) {
 
         var node = nodes[i];
 
@@ -253,7 +253,7 @@ async function calculateNodeSize() {
         var no = await db.Node.findOne({ code: node.code });
         no.vpsCount = vpsOnNode.length;
 
-        no.percent = (no.vpsCount/no.vpsLimit)*100;
+        no.percent = (no.vpsCount / no.vpsLimit) * 100;
 
         if (vpsOnNode.length >= no.vpsLimit) {
             no.isFull = true;
@@ -265,7 +265,7 @@ async function calculateNodeSize() {
 
     }
     log(vpsPerNode, nodeVPSLimit);
-    
+
     log('> Checked nodes!');
 }
 
@@ -312,67 +312,72 @@ async function checkExpiry() {
             log(`${vps.shortID} did not have a proxmox ID`);
         } else {
 
-        var queue = client.opsQueue[vps.node];
-        if (!queue) return console.error(`> Queue ${vps.node} not found`);
+            var queue = client.opsQueue[vps.node];
+            if (queue) {
+                console.error(`> Queue ${vps.node} not found`);
 
-        var vpsPorts = await db.Port.find({
-            vpsID: vps._id
-        });
+                var vpsPorts = await db.Port.find({
+                    vpsID: vps._id
+                });
 
-        for(let i = 0; i < vpsPorts.length; i++) {
-            var port = vpsPorts[i];
+                for (let i = 0; i < vpsPorts.length; i++) {
+                    var port = vpsPorts[i];
 
-            var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
-                action: 'remforward',
-                proxID: vps.proxID,
-                ip: vps.ip,
-                port: port.port,
-                intPort: port.intPort,
-                userID: vps.userID,
-                portID: port._id
-            });
+                    var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
+                        action: 'remforward',
+                        proxID: vps.proxID,
+                        ip: vps.ip,
+                        port: port.port,
+                        intPort: port.intPort,
+                        userID: vps.userID,
+                        portID: port._id
+                    });
 
-            var s = Date.now()/1000;
-            try {
-                await job.waitUntilFinished(queue.events);
-            } catch(e) {
-                log(String(e));
+                    var s = Date.now() / 1000;
+                    try {
+                        await job.waitUntilFinished(queue.events);
+                    } catch (e) {
+                        log(String(e));
+                    }
+                    var e = Date.now() / 1000;
+
+                    log('A port was removed. Took ' + (e - s) + 's');
+
+                    port.isUsed = false;
+                    port.vpsID = null;
+                    port.intPort = null;
+                    await port.save();
+
+                    // jobs.push(String(job.id))
+
+                    log(`> Job: ${job.id}`);
+
+                }
+
+                log(`Added port forwards to queue. Deleting vps...`)
+
+                var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
+                    action: 'delete',
+                    proxID: vps.proxID,
+                    userID: vps.userID,
+                });
+
+                const { time } = require('discord.js');
+
+                await channel.send(`<@${vps.userID}> your vps \`${vps.name}\` (${vps.type}/${vps.shortID}) expired: ${time(new Date(vps.expiry), 'R')}`);
+
+                await db.VPS.deleteOne({
+                    _id: vps._id
+                });
+
+                log(`VPS delete added to queue: ${job.id}`)
             }
-            var e = Date.now()/1000;
-
-            log('A port was removed. Took ' + (e-s) + 's');
-
-            port.isUsed = false;
-            port.vpsID = null;
-            port.intPort = null;
-            await port.save();
-
-            // jobs.push(String(job.id))
-
-            log(`> Job: ${job.id}`);
 
         }
 
-        log(`Added port forwards to queue. Deleting vps...`)
-
-        var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
-            action: 'delete',
-            proxID: vps.proxID,
-            userID: vps.userID,
-        });
-
-        const { time } = require('discord.js');
-
-        await channel.send(`<@${vps.userID}> your vps \`${vps.name}\` (${vps.type}/${vps.shortID}) expired: ${time( new Date(vps.expiry), 'R')}`);
-
-        await db.VPS.deleteOne({
-            _id: vps._id
-        });
-
-        log(`VPS delete added to queue: ${job.id}`)
+    } else {
+        console.error('queue not found')
     }
-
-}
 
     isChecking = false;
 }
