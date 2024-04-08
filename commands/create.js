@@ -37,7 +37,7 @@ class CMD extends SlashCommand {
         var name = interaction.options.getString('name');
         var type = interaction.options.getString('type');
 
-        if (type != 'normal' && test != 'test') return await lib.error(interaction, 'Invalid vps type');
+        if (type != 'normal' && type != 'test') return await lib.error(interaction, 'Invalid vps type');
 
         const db = require('../db');
         var VPS = await db.VPS.find({

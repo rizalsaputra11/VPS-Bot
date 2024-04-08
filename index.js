@@ -302,7 +302,7 @@ async function checkExpiry() {
         } else {
 
         var queue = client.opsQueue[vps.node];
-        if (!queue) return log(`> Queue ${vps.node} not found`);
+        if (!queue) return console.error(`> Queue ${vps.node} not found`);
 
         var vpsPorts = await db.Port.find({
             vpsID: vps._id
