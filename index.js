@@ -314,14 +314,17 @@ async function checkExpiry() {
 
             var queue = client.opsQueue[vps.node];
             if (queue) {
-                console.error(`> Queue ${vps.node} not found`);
+
 
                 var vpsPorts = await db.Port.find({
                     vpsID: vps._id
                 });
 
+                log(`VPS ${vps.shortID} has ${vpsPorts.length} ports`);
+
                 for (let i = 0; i < vpsPorts.length; i++) {
                     var port = vpsPorts[i];
+                    log(`Deleting port ${port.id}`);
 
                     var job = await queue.add(`vps_${vps.userID}-${Date.now()}`, {
                         action: 'remforward',
@@ -333,22 +336,26 @@ async function checkExpiry() {
                         portID: port._id
                     });
 
+                    log(`Job added. ${job.id}`);
+
                     var s = Date.now() / 1000;
                     try {
-                        await job.waitUntilFinished(queue.events);
+                        log('Waiting to finish')
+                        job.waitUntilFinished(queue.events).then(async () => {
+                            log('finished');
+
+                            port.isUsed = false;
+                            port.vpsID = null;
+                            port.intPort = null;
+                            await port.save();
+
+                            var e = Date.now() / 1000;
+
+                            log('A port was removed. Took ' + (e - s) + 's');
+                        });
                     } catch (e) {
-                        log(String(e));
+                        log('error while waiting' + String(e));
                     }
-                    var e = Date.now() / 1000;
-
-                    log('A port was removed. Took ' + (e - s) + 's');
-
-                    port.isUsed = false;
-                    port.vpsID = null;
-                    port.intPort = null;
-                    await port.save();
-
-                    // jobs.push(String(job.id))
 
                     log(`> Job: ${job.id}`);
 
@@ -375,8 +382,6 @@ async function checkExpiry() {
 
         }
 
-    } else {
-        console.error('queue not found')
     }
 
     isChecking = false;
