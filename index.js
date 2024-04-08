@@ -127,7 +127,7 @@ function createEvents(name, queueOptions, q, code) {
                 VPS.proxID = returnvalue.proxID;
                 VPS.state = 'created';
                 if (VPS.type == 'normal') {
-                    VPS.expiry = dayjs().add(1, 'day');
+                    VPS.expiry = dayjs().add(2, 'day');
                 } else {
                     VPS.expiry = dayjs().add(3, 'hour');
                 }
