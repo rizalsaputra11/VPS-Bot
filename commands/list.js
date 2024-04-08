@@ -38,6 +38,7 @@ class CMD extends SlashCommand {
             res += `State: ${vps.state}\n`;
             res += `Node: ${vps.node}\n`;
             res += `Ports: Available using \`/ports\`\n`;
+            res += `Type: ${vps.type}\n`
 
             res += '\n\n';
         }
