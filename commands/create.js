@@ -20,10 +20,10 @@ class CMD extends SlashCommand {
                 .setDescription('VPS name')
 				.setRequired(true));
 
-        /* this.addStringOption(option =>
+        this.addStringOption(option =>
             option.setName('type')
                 .setDescription('normal / test (normal=2 GB ram @ 1 day renew | test=4 GB ram @ 3 hour renew)')
-                .setRequired(true)); */
+                .setRequired(true));
         
 
         this.requiresAdmin = false;
@@ -35,8 +35,8 @@ class CMD extends SlashCommand {
         var user = await lib.getUser(interaction);
         
         var name = interaction.options.getString('name');
-        // var type = interaction.options.getString('type');
-	var type = 'test';
+        var type = interaction.options.getString('type');
+	// var type = 'test';
 
         if (type != 'normal' && type != 'test') return await lib.error(interaction, 'Invalid vps type');
 
@@ -48,9 +48,17 @@ class CMD extends SlashCommand {
             return lib.error(interaction, `You have reached your vps limit. You are limited to ${user.vpsLimit} vps, but you currently have ${VPS.length} vps.`);
         }
 
+	    var nC;
+	if (type == 'test') {
+		nC = 'de-f1';
+	} else {
+		nC = 'ro-f1'
+	}
+	    
         var node = await db.Node.findOne({
             isFull: false,
-            isAvailable: true
+            isAvailable: true,
+ 		code: nC
         }).sort({ percent: 1 }).exec();
 
         if (!node) return await lib.error(interaction, 'No node available.');
