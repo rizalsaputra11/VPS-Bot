@@ -20,7 +20,7 @@ class CMD extends SlashCommand {
         this.addIntegerOption(option =>
             option.setName('port')
                 .setDescription('internal port (e.g. 80)')
-                .setRequired(true));
+                .setRequired(false));
 
         this.requiresAdmin = false;
     }
@@ -53,6 +53,7 @@ class CMD extends SlashCommand {
             isUsed: false
         });
         if (!sshPort) return await lib.error(interaction, 'Sorry, no ports are available. Please contact an administrator.');
+	if (!port) port = sshPort.port;
         sshPort.isUsed = true;
         sshPort.intPort = port;
         sshPort.vpsID = VPS._id;
