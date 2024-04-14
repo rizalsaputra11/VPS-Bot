@@ -20,10 +20,10 @@ class CMD extends SlashCommand {
                 .setDescription('VPS name')
 				.setRequired(true));
 
-        this.addStringOption(option =>
+        /* this.addStringOption(option =>
             option.setName('type')
                 .setDescription('normal / test (normal=2 GB ram @ 1 day renew | test=4 GB ram @ 3 hour renew)')
-                .setRequired(true));
+                .setRequired(true)); */
         
 
         this.requiresAdmin = false;
@@ -35,7 +35,8 @@ class CMD extends SlashCommand {
         var user = await lib.getUser(interaction);
         
         var name = interaction.options.getString('name');
-        var type = interaction.options.getString('type');
+        // var type = interaction.options.getString('type');
+	var type = 'test';
 
         if (type != 'normal' && type != 'test') return await lib.error(interaction, 'Invalid vps type');
 
