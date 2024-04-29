@@ -30,7 +30,7 @@ async function getUser(interaction, isMessage) {
         user = new db.User({
             userID,
             balance: 0,
-            vpsLimit: 1,
+            vpsLimit: 0,
             plan: 'free',
             isBanned: false,
             banReason: '',
