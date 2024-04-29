@@ -40,7 +40,13 @@ class CMD extends SlashCommand {
             userID: interaction.user.id
         });
         if (VPS.length >= user.vpsLimit) {
-            return lib.error(interaction, `You have reached your vps limit. You are limited to ${user.vpsLimit} vps, but you currently have ${VPS.length} vps.`);
+		if (user.vpsLimit == 0 && user.isBanned == false) {
+			 return lib.error(interaction, `You currently can't create any vps. In order to be able to create one, you will need to request one via the form: https://forms.gle/x1urbCtEHTbbRXZo9. After filling in the from, create a ticket.`);
+		} else if (user.vpsLimit == 0 && user.isBanned == true) {
+			return lib.error(interaction, `User is banned from service.`);
+		} else {
+			return lib.error(interaction, `You have reached your vps limit. You are limited to ${user.vpsLimit} vps, but you currently have ${VPS.length} vps.`);
+		}
         }
 
 	    var nC;
