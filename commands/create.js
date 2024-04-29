@@ -30,8 +30,8 @@ class CMD extends SlashCommand {
         var user = await lib.getUser(interaction);
         
         var name = interaction.options.getString('name');
-        var type = interaction.options.getString('type');
-	// var type = 'test';
+        // var type = interaction.options.getString('type');
+	var type = 'normal';
 
         if (type != 'normal' && type != 'test') return await lib.error(interaction, 'Invalid vps type');
 
