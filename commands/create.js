@@ -19,11 +19,6 @@ class CMD extends SlashCommand {
             option.setName('name')
                 .setDescription('VPS name')
 				.setRequired(true));
-
-        this.addStringOption(option =>
-            option.setName('type')
-                .setDescription('normal / test (normal=2 GB ram @ 1 day renew | test=4 GB ram @ 3 hour renew)')
-                .setRequired(true));
         
 
         this.requiresAdmin = false;
