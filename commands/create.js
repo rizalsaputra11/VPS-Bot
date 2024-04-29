@@ -49,17 +49,17 @@ class CMD extends SlashCommand {
 		}
         }
 
-	    var nC;
+	 /*   var nC;
 	if (type == 'test') {
 		nC = 'de-f1';
 	} else {
 		nC = 'ro-f1'
-	}
+	} */
 	    
         var node = await db.Node.findOne({
             isFull: false,
             isAvailable: true,
- 		code: nC
+ 		// code: nC
         }).sort({ percent: 1 }).exec();
 
         if (!node) return await lib.error(interaction, 'No node available.');
