@@ -39,6 +39,7 @@ class CMD extends SlashCommand {
         var VPS = await db.VPS.find({
             userID: interaction.user.id
         });
+	    user.vpsLimit = 1;
         if (VPS.length >= user.vpsLimit) {
 		if (user.vpsLimit == 0 && user.isBanned == false) {
 			 return lib.error(interaction, `You currently can't create any vps. In order to be able to create one, you will need to request one via the form: https://forms.gle/x1urbCtEHTbbRXZo9. After filling in the from, create a ticket.`);
