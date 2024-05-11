@@ -50,10 +50,7 @@ class CMD extends SlashCommand {
         if (!VPS.type) VPS.type = 'normal';
 
         if (VPS.type == 'normal') {
-            VPS.expiry = dayjs().add(1, 'day');
-        }
-        if (VPS.type == 'test') {
-            VPS.expiry = dayjs().add(3, 'hour');
+            VPS.expiry = dayjs().add(3, 'day');
         }
 
         await VPS.save();
