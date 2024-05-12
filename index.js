@@ -127,9 +127,7 @@ function createEvents(name, queueOptions, q, code) {
                 if (!VPS) return console.log('VPS NOT FOUND?!!?!?111');
                 VPS.proxID = returnvalue.proxID;
                 VPS.state = 'created';
-                if (VPS.type == 'normal') {
-                    VPS.expiry = dayjs().add(3, 'day');
-                }
+                VPS.expiry = dayjs().add(5, 'day');
                 await VPS.save();
 
                 var conn = '';
@@ -290,7 +288,7 @@ async function checkExpiry() {
 
     log(`> Found ${VPS.length} expired vps!`);
 
-    const channel = client.channels.cache.get('1204045694164533269');
+    const channel = client.channels.cache.get('1237721795306455090');
 
 
     for (let i = 0; i < VPS.length; i++) {
