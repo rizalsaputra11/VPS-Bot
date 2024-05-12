@@ -47,11 +47,8 @@ class CMD extends SlashCommand {
 
         const dayjs = require('dayjs');
 
-        if (!VPS.type) VPS.type = 'normal';
-
-        if (VPS.type == 'normal') {
-            VPS.expiry = dayjs().add(3, 'day');
-        }
+        if (!VPS.type) VPS.type = 'alpine';
+        VPS.expiry = dayjs().add(5, 'day');
 
         await VPS.save();
 
