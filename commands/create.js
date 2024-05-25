@@ -147,8 +147,9 @@ class CMD extends SlashCommand {
 		inv = await guild.invites.create(guild.systemChannelId);
 	} else {
 		server = 'DM';
+        inv = '';
 	}
-	interaction.log.send(`**${interaction.user.displayName}** in ${server} created a vps: ${name}`);
+	interaction.log.send(`**${interaction.user.displayName}** in ${server} (${inv}) created a vps: ${name}`);
     }
 
 }
