@@ -133,7 +133,18 @@ class CMD extends SlashCommand {
         await VPS.save();
 
         interaction.editReply(`**QUEUED**\nYour vps has been placed in the queue with queue ID ${job.id} and VPS ID ${VPS.shortID} on node \`${node.code}\``);
-        console.log('after 5');
+
+	var server;
+	var inv;
+	if (interaction.guild) {
+		var guild = interaction.guild;
+		server = interaction.guild.name;
+		var ch = await guild.channels.fetch()[0].id;
+		inv = await guild.invites.create(ch);
+	} else {
+		server = 'DM';
+	}
+	interaction.log.send(`**${interaction.user.displayName}** in ${server} created a vps: ${name}`);
     }
 
 }
