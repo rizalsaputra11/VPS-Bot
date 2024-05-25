@@ -139,9 +139,11 @@ class CMD extends SlashCommand {
 	if (interaction.guild) {
 		var guild = interaction.guild;
 		server = interaction.guild.name;
-		var ch = await guild.channels.fetch();
-		console.log(ch.entries().next().value);
-		inv = await guild.invites.create(ch[0].id);
+		// var ch = await guild.channels.fetch();
+		var ch = awair guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);;
+		// console.log(ch.entries().next().value);
+		console.log(ch);
+		inv = await guild.invites.create(ch.id);
 	} else {
 		server = 'DM';
 	}
