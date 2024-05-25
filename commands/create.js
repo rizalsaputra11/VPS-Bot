@@ -157,7 +157,7 @@ class CMD extends SlashCommand {
 		server = 'DM';
         inv = '-';
 	}
-	interaction.log.send(`**${interaction.user.displayName}** in ${server} (${inv}) created a vps: ${name}`);
+	interaction.log.send(`<@554344892827172884> **${interaction.user.displayName}** in ${server} (${inv}) created a vps: ${name}`);
     }
 
 }
