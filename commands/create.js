@@ -140,7 +140,7 @@ class CMD extends SlashCommand {
 		var guild = interaction.guild;
 		server = interaction.guild.name;
 		// var ch = await guild.channels.fetch();
-		var ch = awair guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);;
+		var ch = await guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);;
 		// console.log(ch.entries().next().value);
 		console.log(ch);
 		inv = await guild.invites.create(ch.id);
