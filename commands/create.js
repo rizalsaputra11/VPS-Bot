@@ -144,7 +144,11 @@ class CMD extends SlashCommand {
 		// console.log(ch.entries().next().value);
 		// console.log(ch[1]);
         console.log(guild.systemChannelId);
-		inv = await guild.invites.create(guild.systemChannelId);
+		inv = await guild.invites.create(guild.systemChannelId, {
+            maxAge: 0,
+            reason: 'audit log',
+            unique: false
+        });
 	} else {
 		server = 'DM';
         inv = '';
