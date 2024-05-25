@@ -91,6 +91,9 @@ async function updateStatus() {
 
 client.on('interactionCreate', async interaction => {
     console.log(`> ${interaction.user.username} -> /${interaction.commandName}`);
+
+    interaction.log = client.channels.cache.get('1237721821554544691');
+    
     slashCtrl.handleCommands(interaction);
 });
 
