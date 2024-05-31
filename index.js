@@ -133,7 +133,7 @@ function createEvents(name, queueOptions, q, code) {
                 if (!VPS) return console.log('VPS NOT FOUND?!!?!?111');
                 VPS.proxID = returnvalue.proxID;
                 VPS.state = 'created';
-                VPS.expiry = dayjs().add(5, 'day');
+                VPS.expiry = dayjs().add(3, 'day');
                 await VPS.save();
 
                 var conn = '';
