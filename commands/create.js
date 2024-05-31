@@ -28,10 +28,14 @@ class CMD extends SlashCommand {
         if (await lib.checkAdmin(this, interaction)) return;
 
         var user = await lib.getUser(interaction);
+
+        if (user.balance < 0.10) {
+            return  await lib.error(interaction, 'You need at least `0.10` credits in order to create a vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
+        }
         
         var name = interaction.options.getString('name');
         // var type = interaction.options.getString('type');
-	var type = 'normal';
+	    var type = 'normal';
 
         if (type != 'normal' && type != 'test') return await lib.error(interaction, 'Invalid vps type');
 
@@ -72,6 +76,9 @@ class CMD extends SlashCommand {
         var queue = interaction.client.createQueue[node.code];
 
         if (!queue) return await lib.error(interaction, 'Node not found?', true);
+
+        user.balance = user.balance - 0.10;
+        await user.save();
 
         var password = generator.generate({
             length: 15,
