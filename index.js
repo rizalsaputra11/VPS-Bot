@@ -6,7 +6,10 @@ const dayjs = require('dayjs');
 const { log } = console;
 
 var relativeTime = require('dayjs/plugin/relativeTime')
-dayjs.extend(relativeTime)
+dayjs.extend(relativeTime);
+
+var timeOut;
+timeOut = {};
 
 // var channel;
 
@@ -269,11 +272,21 @@ async function calculateNodeSize() {
 }
 
 client.on('messageCreate', async (msg) => {
+    if (timeOut[msg.author.id]) {
+        console.log(`User has timeout`);
+        return;
+    }
+
     var lib = require('./lib');
     var user = await lib.getUser(msg, true);
 
     user.balance = user.balance + 1;
     await user.save();
+    timeOut[msg.author.id] = true;
+    setTimeout(() => {
+        console.log(`Remove msg timeout`);
+        delete timeOut[msg.author.id];
+    }, 5 * 1000);
 })
 
 async function checkExpiry() {
