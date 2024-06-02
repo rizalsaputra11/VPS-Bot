@@ -28,7 +28,7 @@ class CMD extends SlashCommand {
 
         var user = await lib.getUser(interaction);
 
-        if (user.balance < 15) {
+        if (user.balance < 5) {
             return  await lib.error(interaction, 'You need at least `0.15` credits in order to renew your vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
         }
 
@@ -60,7 +60,7 @@ class CMD extends SlashCommand {
 
         const ex = time(  new Date(VPS.expiry) , 'R');
 
-        user.balance = user.balance - 15;
+        user.balance = user.balance - 5;
         await user.save();
 
         interaction.editReply(`VPS Renewed! Expiry: ${ex}`);
