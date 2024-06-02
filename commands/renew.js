@@ -29,7 +29,7 @@ class CMD extends SlashCommand {
         var user = await lib.getUser(interaction);
 
         if (user.balance < 5) {
-            return  await lib.error(interaction, 'You need at least `0.15` credits in order to renew your vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
+            return  await lib.error(interaction, 'You need at least `0.05` credits in order to renew your vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
         }
 
         var ID = interaction.options.getInteger('id');
