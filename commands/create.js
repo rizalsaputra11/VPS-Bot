@@ -29,8 +29,8 @@ class CMD extends SlashCommand {
 
         var user = await lib.getUser(interaction);
 
-        if (user.balance < 5) {
-            return  await lib.error(interaction, 'You need at least `0.05` credits in order to create a vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
+        if (user.balance < 2) {
+            return  await lib.error(interaction, 'You need at least `0.02` credits in order to create a vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
         }
         
         var name = interaction.options.getString('name');
@@ -81,7 +81,7 @@ class CMD extends SlashCommand {
 
         if (!queue) return await lib.error(interaction, 'Node not found?', true);
 
-        user.balance = user.balance - 5;
+        user.balance = user.balance - 2;
         await user.save();
 
         var password = generator.generate({
