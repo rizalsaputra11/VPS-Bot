@@ -28,8 +28,8 @@ class CMD extends SlashCommand {
 
         var user = await lib.getUser(interaction);
 
-        if (user.balance < 50) {
-            return  await lib.error(interaction, 'You need at least `0.50` credits in order to create a vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
+        if (user.balance < 15) {
+            return  await lib.error(interaction, 'You need at least `0.15` credits in order to renew your vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
         }
 
         var ID = interaction.options.getInteger('id');
@@ -60,7 +60,7 @@ class CMD extends SlashCommand {
 
         const ex = time(  new Date(VPS.expiry) , 'R');
 
-        user.balance = user.balance - 50;
+        user.balance = user.balance - 15;
         await user.save();
 
         interaction.editReply(`VPS Renewed! Expiry: ${ex}`);
