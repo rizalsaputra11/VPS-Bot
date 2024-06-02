@@ -135,7 +135,7 @@ class CMD extends SlashCommand {
             vpsID: VPS._id,
             node: node.code,
             portID: sshPort._id,
-            shortID: VPS.stortID,
+            shortID: VPS.shortID,
             storage: node.storage,
             type,
 	    subnet: node.subnet
