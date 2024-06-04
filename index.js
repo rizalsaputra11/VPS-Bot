@@ -95,7 +95,7 @@ async function updateStatus() {
 client.on('interactionCreate', async interaction => {
     console.log(`> ${interaction.user.username} -> /${interaction.commandName}`);
 
-    interaction.log = client.channels.cache.get('1237721821554544691');
+    interaction.log = client.channels.cache.get(process.env.CH_LOG);
     
     slashCtrl.handleCommands(interaction);
 });
@@ -304,7 +304,7 @@ async function checkExpiry() {
 
     log(`> Found ${VPS.length} expired vps!`);
 
-    const channel = client.channels.cache.get('1237721795306455090');
+    const channel = client.channels.cache.get(process.env.CH_EXPIRY);
 
 
     for (let i = 0; i < VPS.length; i++) {
