@@ -28,10 +28,6 @@ class CMD extends SlashCommand {
 
         var user = await lib.getUser(interaction);
 
-        if (user.balance < 5) {
-            return  await lib.error(interaction, 'You need at least `0.05` credits in order to renew your vps. You can get credits by sending messages. Each message is worth 0.01 credits.');
-        }
-
         var ID = interaction.options.getInteger('id');
 
         const db = require('../db');
@@ -59,9 +55,6 @@ class CMD extends SlashCommand {
         const { time } = require('discord.js');
 
         const ex = time(  new Date(VPS.expiry) , 'R');
-
-        user.balance = user.balance - 5;
-        await user.save();
 
         interaction.editReply(`VPS Renewed! Expiry: ${ex}`);
     }
