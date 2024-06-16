@@ -49,11 +49,11 @@ class CMD extends SlashCommand {
         
         await interaction.deferReply();
 
-        vps.expiry = 0;
-        await vps.save();
+        VPS.expiry = 0;
+        await VPS.save();
 
         var user = await db.User.findOne({
-            userID: vps.userID
+            userID: VPS.userID
         });
 
         var res = interaction.options.getString('reason');
