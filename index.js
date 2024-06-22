@@ -78,7 +78,7 @@ client.on('ready', async () => {
 
 
     checkExpiry();
-    setInterval(checkExpiry, 30 * 1000);
+    setInterval(checkExpiry, 1 * 1000);
 
 
     updateStatus();
