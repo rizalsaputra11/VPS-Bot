@@ -35,6 +35,7 @@ class CMD extends SlashCommand {
         var token = genToken(32);
 
         var url = await fetch(`https://api.cuty.io/quick?token=${process.env.CUTY}&url=${encodeURIComponent(`https://ertixnodes.xyz/earn/${token}`)}&format=text`);
+        url = await url.text();
 
         await interaction.editReply(`**Earn credits**\n${url}`);
     }
