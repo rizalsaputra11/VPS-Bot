@@ -37,6 +37,15 @@ class CMD extends SlashCommand {
         var url = await fetch(`https://api.cuty.io/quick?token=${process.env.CUTY}&url=${encodeURIComponent(`https://ertixnodes.xyz/earn/${token}`)}&format=text`);
         url = await url.text();
 
+        const db = require('../db');
+        const earn = new db.Earn({
+            userID: interaction.user.id,
+            isUsed: false,
+            creditCount: 2,
+            token
+        });
+        await earn.save();
+
         await interaction.editReply(`**Earn credits**\n${url}`);
     }
 
