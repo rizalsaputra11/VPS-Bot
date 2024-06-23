@@ -290,7 +290,7 @@ async function calculateNodeSize() {
 // })
 
 async function checkExpiry() {
-    if (isChecking == true) return log('is checking');
+    if (isChecking == true) return;
 
     isChecking = true;
 
@@ -302,7 +302,7 @@ async function checkExpiry() {
         }
     });
 
-    log(`> Found ${VPS.length} expired vps!`);
+    if (VPS.length > 0) log(`> Found ${VPS.length} expired vps!`);
 
     const channel = client.channels.cache.get(process.env.CH_EXPIRY);
 
