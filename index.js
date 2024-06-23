@@ -294,7 +294,6 @@ async function checkExpiry() {
 
     isChecking = true;
 
-    log('> Checking expiry')
     const db = require('./db');
     var VPS = await db.VPS.find({
         expiry: {
