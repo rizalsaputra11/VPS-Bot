@@ -75,7 +75,8 @@ const Port = mongoose.model('Port', {
 const Earn = mongoose.model('Earn', {
     userID: String,
     isUsed: Boolean,
-    creditCount: Number
+    creditCount: Number,
+    token: String
 });
 
 module.exports = {
