@@ -71,9 +71,17 @@ const Port = mongoose.model('Port', {
     intPort: Number
 });
 
+// Money
+const Earn = mongoose.model('Earn', {
+    userID: String,
+    isUsed: Boolean,
+    creditCount: Number
+});
+
 module.exports = {
     User,
     VPS,
     Node,
-    Port
+    Port,
+    Earn
 };
