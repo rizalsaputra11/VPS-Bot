@@ -271,23 +271,23 @@ async function calculateNodeSize() {
     log('> Checked nodes!');
 }
 
-client.on('messageCreate', async (msg) => {
-    if (timeOut[msg.author.id]) {
-        console.log(`User has timeout`);
-        return;
-    }
+// client.on('messageCreate', async (msg) => {
+//     if (timeOut[msg.author.id]) {
+//         console.log(`User has timeout`);
+//         return;
+//     }
 
-    var lib = require('./lib');
-    var user = await lib.getUser(msg, true);
+//     var lib = require('./lib');
+//     var user = await lib.getUser(msg, true);
 
-    user.balance = user.balance + 1;
-    await user.save();
-    timeOut[msg.author.id] = true;
-    setTimeout(() => {
-        console.log(`Remove msg timeout`);
-        delete timeOut[msg.author.id];
-    }, 5 * 1000);
-})
+//     user.balance = user.balance + 1;
+//     await user.save();
+//     timeOut[msg.author.id] = true;
+//     setTimeout(() => {
+//         console.log(`Remove msg timeout`);
+//         delete timeOut[msg.author.id];
+//     }, 5 * 1000);
+// })
 
 async function checkExpiry() {
     if (isChecking == true) return log('is checking');
