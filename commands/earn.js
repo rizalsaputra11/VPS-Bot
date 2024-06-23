@@ -46,8 +46,8 @@ class CMD extends SlashCommand {
         });
         await earn.save();
 
-        await interaction.editReply(`**Earn credits:**\n<${url}>\n\nYou will earn :coin:2 for every view.`);
-    }
+        await interaction.editReply(`**Earn credits:**\n<${url}>\n\nYou will earn :coin:2 for every view. Please note that each link is only valid ONCE.`);
+    } 
 
 }
 
