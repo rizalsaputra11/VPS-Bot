@@ -1,5 +1,6 @@
 const { SlashCommand } = require('slashctrl');
 const { checkAdmin } = require('../lib');
+const lib = require('../lib');
 
 function genToken(length){
     //edit the token allowed characters
@@ -30,6 +31,7 @@ class CMD extends SlashCommand {
     async execute(interaction) {
         if (await checkAdmin(this, interaction)) return;
 
+        await lib.getUser(interaction);
         await interaction.reply('Generating link...');
 
         var token = genToken(32);
