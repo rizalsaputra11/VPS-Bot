@@ -43,12 +43,12 @@ class CMD extends SlashCommand {
         const earn = new db.Earn({
             userID: interaction.user.id,
             isUsed: false,
-            creditCount: 5,
+            creditCount: 2,
             token
         });
         await earn.save();
 
-        await interaction.editReply(`**Earn credits:**\n<${url}>\n\nYou will earn **:coin:5** for every view. Please note that each link is only valid ONCE.`);
+        await interaction.editReply(`**Earn credits:**\n<${url}>\n\nYou will earn **:coin:2** for every view. Please note that each link is only valid ONCE.`);
     } 
 
 }
