@@ -10,7 +10,9 @@ const User = mongoose.model('User', {
     banReason: String,
     
     plan: String, // free
-    portLimit: Number
+    portLimit: Number,
+
+    lastEarn: Number
 });
 
 const VPS = mongoose.model('VPS', {
