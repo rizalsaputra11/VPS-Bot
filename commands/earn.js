@@ -79,7 +79,7 @@ class CMD extends SlashCommand {
         const earn = new db.Earn({
             userID: interaction.user.id,
             isUsed: false,
-            creditCount: 3,
+            creditCount: 5,
             token
         });
         await earn.save();
